@@ -1,1 +1,96 @@
-
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mana Seva - మన సేవ</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#eef5ff;color:#12345a}
+header{background:#0758b8;color:white;padding:22px 16px;border-radius:0 0 22px 22px}
+h1{margin:0;font-size:28px}
+p{line-height:1.5}
+input,button{font-size:16px}
+input{box-sizing:border-box;width:100%;padding:13px;border:1px solid #b9d4f1;border-radius:12px;margin-top:14px}
+main{padding:16px}
+h2{font-size:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:white;border:1px solid #d5e5f7;border-radius:15px;padding:16px 8px;text-align:center;min-height:90px;cursor:pointer;color:#12345a}
+.card span{display:block;font-size:27px;margin-bottom:8px}
+.card strong{font-size:14px}
+button{background:#0758b8;color:white;border:0;border-radius:10px;padding:12px;cursor:pointer}
+#details{display:none;background:white;padding:16px;border-radius:15px;margin-top:16px}
+footer{position:sticky;bottom:0;background:white;padding:12px;text-align:center;border-top:1px solid #ddd}
+</style>
+</head>
+<body>
+<header>
+<h1>🌿 Mana Seva</h1>
+<p>మన సేవ — Government Services Guide</p>
+<button onclick="changeLang()">తెలుగు / English</button>
+<input id="search" placeholder="సేవను వెతకండి / Search services"
+oninput="filterServices()">
+</header>
+<main>
+<h2 id="heading">ప్రభుత్వ సేవలు</h2>
+<div class="grid" id="services">
+<div class="card" onclick="openService('జనన ధృవపత్రం','Birth Certificate')"><span>👶</span><strong data-en="Birth Certificate">జనన ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('మరణ ధృవపత్రం','Death Certificate')"><span>📄</span><strong data-en="Death Certificate">మరణ ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('ఆదాయ ధృవపత్రం','Income Certificate')"><span>💰</span><strong data-en="Income Certificate">ఆదాయ ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('కుల ధృవపత్రం','Caste Certificate')"><span>👥</span><strong data-en="Caste Certificate">కుల ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('OBC ధృవపత్రం','OBC Certificate')"><span>📋</span><strong data-en="OBC Certificate">OBC ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('EWS ధృవపత్రం','EWS Certificate')"><span>📑</span><strong data-en="EWS Certificate">EWS ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('రేషన్ కార్డు','Ration Card')"><span>🪪</span><strong data-en="Ration Card">రేషన్ కార్డు</strong></div>
+<div class="card" onclick="openService('రేషన్ కార్డులో సభ్యుడిని చేర్చడం / తొలగించడం','Ration Card Member Changes')"><span>👨‍👩‍👧</span><strong data-en="Ration Card Member Changes">రేషన్ సభ్యుల మార్పులు</strong></div>
+<div class="card" onclick="openService('పెన్షన్ సేవలు','Pension Services')"><span>🧓</span><strong data-en="Pension Services">పెన్షన్ సేవలు</strong></div>
+<div class="card" onclick="openService('ఆరోగ్యశ్రీ','Aarogyasri')"><span>✚</span><strong data-en="Aarogyasri">ఆరోగ్యశ్రీ</strong></div>
+<div class="card" onclick="openService('కుటుంబ సభ్యుల ధృవపత్రం','Family Member Certificate')"><span>👪</span><strong data-en="Family Member Certificate">కుటుంబ సభ్యుల ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('వివాహ ధృవపత్రం','Marriage Certificate')"><span>💍</span><strong data-en="Marriage Certificate">వివాహ ధృవపత్రం</strong></div>
+<div class="card" onclick="openService('రెవెన్యూ సేవలు','Revenue Services')"><span>🏛️</span><strong data-en="Revenue Services">రెవెన్యూ సేవలు</strong></div>
+<div class="card" onclick="openService('ఇతర ప్రభుత్వ సేవలు','Other Government Services')"><span>⚙️</span><strong data-en="Other Government Services">ఇతర సేవలు</strong></div>
+</div>
+<section id="details">
+<h2 id="serviceTitle"></h2>
+<p>ఈ సేవకు అవసరమైన పత్రాలు, అర్హతలు, దరఖాస్తు విధానం సంబంధిత ప్రభుత్వ శాఖలో నిర్ధారించుకోండి.</p>
+<p>Check the official government portal or local office for eligibility and required documents.</p>
+<button onclick="closeService()">వెనక్కి / Back</button>
+</section>
+</main>
+<footer>Mana Seva | సేవ మీ కోసం 💙</footer>
+<script>
+let english=false;
+function openService(te,en){
+document.getElementById('details').style.display='block';
+document.getElementById('serviceTitle').textContent=english?en:te;
+document.getElementById('details').scrollIntoView({behavior:'smooth'});
+}
+function closeService(){document.getElementById('details').style.display='none';}
+function filterServices(){
+let q=document.getElementById('search').value.toLowerCase();
+document.querySelectorAll('.card').forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(q)||c.innerText.includes(q)?'block':'none';
+});
+}
+function changeLang(){
+english=!english;
+document.querySelectorAll('[data-en]').forEach(e=>e.textContent=english?e.dataset.en:({
+'Birth Certificate':'జనన ధృవపత్రం',
+'Death Certificate':'మరణ ధృవపత్రం',
+'Income Certificate':'ఆదాయ ధృవపత్రం',
+'Caste Certificate':'కుల ధృవపత్రం',
+'OBC Certificate':'OBC ధృవపత్రం',
+'EWS Certificate':'EWS ధృవపత్రం',
+'Ration Card':'రేషన్ కార్డు',
+'Ration Card Member Changes':'రేషన్ సభ్యుల మార్పులు',
+'Pension Services':'పెన్షన్ సేవలు',
+'Aarogyasri':'ఆరోగ్యశ్రీ',
+'Family Member Certificate':'కుటుంబ సభ్యుల ధృవపత్రం',
+'Marriage Certificate':'వివాహ ధృవపత్రం',
+'Revenue Services':'రెవెన్యూ సేవలు',
+'Other Government Services':'ఇతర సేవలు'
+}[e.dataset.en]));
+document.getElementById('heading').textContent=english?'Government Services':'ప్రభుత్వ సేవలు';
+document.getElementById('search').placeholder=english?'Search services':'సేవను వెతకండి';
+}
+</script>
+</body>
+</html>
